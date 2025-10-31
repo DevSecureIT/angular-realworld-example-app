@@ -44,7 +44,7 @@ jobs:
         # Attendre que l'application soit prête
         sleep 5
         # Vérifier que l'application répond
-        curl -s http://localhost:8080 | grep -q "conduit" && echo "✅ Application is running correctly in staging" || (echo "❌ Staging verification failed" && exit 1)
+        curl -s http://localhost:8080 | grep -q "conduit" && echo " Application is running correctly in staging" || (echo " Staging verification failed" && exit 1)
 
   # Déploiement en production
   deploy-production:
@@ -65,4 +65,4 @@ jobs:
         # Attendre que l'application soit prête
         sleep 5
         # Vérifier que l'application répond
-        curl -s http://localhost:80 | grep -q "conduit" && echo "✅ Application is running correctly in production" || (echo "❌ Production verification failed" && exit 1)
+        curl -s http://localhost:80 | grep -q "conduit" && echo " Application is running correctly in production" || (echo " Production verification failed" && exit 1)
