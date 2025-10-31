@@ -63,7 +63,7 @@ jobs:
           echo "Deployment to production completed."
       
       - name: Verify production deployment
-        shell: pwsh
+        shell: powershell
         run: |
           echo "Verifying production deployment..."
           Start-Sleep -Seconds 5
