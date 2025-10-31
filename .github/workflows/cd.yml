@@ -37,12 +37,18 @@ jobs:
           echo "Deployment to staging completed."
       
       - name: Verify staging deployment
+        shell: pwsh
         run: |
           echo "Verifying staging deployment..."
-          # Attendre que l'application soit prête
-          sleep 5
-          # Vérifier que l'application répond
-          curl -s http://localhost:8080 | grep -q "conduit" && echo "✅ Application is running correctly in staging" || (echo "❌ Staging verification failed" && exit 1)
+          Start-Sleep -Seconds 5
+          
+          $response = Invoke-WebRequest -Uri http://localhost:8080 -UseBasicParsing
+          if ($response.Content -match "conduit") {
+            Write-Host "✅ Application is running correctly in staging" -ForegroundColor Green
+          } else {
+            Write-Host "❌ Staging verification failed" -ForegroundColor Red
+            exit 1
+          }
 
   # Déploiement en production
   deploy-production:
@@ -57,9 +63,15 @@ jobs:
           echo "Deployment to production completed."
       
       - name: Verify production deployment
+        shell: pwsh
         run: |
           echo "Verifying production deployment..."
-          # Attendre que l'application soit prête
-          sleep 5
-          # Vérifier que l'application répond
-          curl -s http://localhost:80 | grep -q "conduit" && echo "✅ Application is running correctly in production" || (echo "❌ Production verification failed" && exit 1)
+          Start-Sleep -Seconds 5
+          
+          $response = Invoke-WebRequest -Uri http://localhost:80 -UseBasicParsing
+          if ($response.Content -match "conduit") {
+            Write-Host "✅ Application is running correctly in production" -ForegroundColor Green
+          } else {
+            Write-Host "❌ Production verification failed" -ForegroundColor Red
+            exit 1
+          }
